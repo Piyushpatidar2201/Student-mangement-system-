@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Add Student - Student Management System{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Add New Student</h2>
+    <a href="{{ url_for('students') }}" class="btn btn-secondary"><i class="bi bi-arrow-left me-1"></i> Back to List</a>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header bg-white">
+        <i class="bi bi-person-plus me-1"></i> Student Details
+    </div>
+    <div class="card-body">
+        <form method="POST">
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="firstName" class="form-label">First Name</label>
+                    <input type="text" name="first_name" class="form-control" id="firstName" placeholder="e.g. John"
+                        value="{{ form_data.first_name if form_data else '' }}" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="lastName" class="form-label">Last Name</label>
+                    <input type="text" name="last_name" class="form-control" id="lastName" placeholder="e.g. Doe"
+                        value="{{ form_data.last_name if form_data else '' }}" required>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="email" class="form-label">Email Address</label>
+                    <input type="email" name="email" class="form-control" id="email"
+                        placeholder="e.g. john.doe@example.com" value="{{ form_data.email if form_data else '' }}" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="phone" class="form-label">Phone Number</label>
+                    <input type="tel" name="phone" class="form-control" id="phone"
+                        placeholder="e.g. +1 234 567 8900" value="{{ form_data.phone if form_data else '' }}">
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="address" class="form-label">Address</label>
+                <textarea name="address" class="form-control" id="address" rows="3"
+                    placeholder="Enter full address...">{{ form_data.address if form_data else '' }}</textarea>
+            </div>
+            <div class="d-flex justify-content-end">
+                <button type="reset" class="btn btn-light me-2">Reset</button>
+                <button type="submit" class="btn btn-primary"><i class="bi bi-save me-1"></i> Save Student</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

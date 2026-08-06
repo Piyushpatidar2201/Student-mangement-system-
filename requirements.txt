@@ -1,0 +1,6 @@
+Flask==3.1.3
+Werkzeug==3.1.3
+gunicorn==23.0.0
+
+# Optional, only needed if you switch database.py to MySQL:
+# PyMySQL==1.1.1

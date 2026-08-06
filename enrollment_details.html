@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block title %}Enrollment Details - Student Management System{% endblock %}
+
+{% block content %}
+<div class="bg-primary text-white rounded-3 p-4 mb-4">
+    <div class="d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between gap-3">
+        <div>
+            <h2 class="mb-1">Enrollment Details</h2>
+            <p class="mb-0 opacity-75">Overview of courses, fees, and student information.</p>
+        </div>
+        <a href="{{ url_for('enrolled_students') }}" class="btn btn-light text-primary fw-semibold"><i class="bi bi-arrow-left me-1"></i> Back to Enrolled Students</a>
+    </div>
+</div>
+
+<div class="row g-4">
+    <!-- Section 1 + 3: Student info and summary -->
+    <div class="col-lg-4">
+        <div class="card h-100 mb-3 mb-lg-4">
+            <div class="card-header bg-white">
+                <i class="bi bi-person-badge me-1"></i> Student Information
+            </div>
+            <div class="card-body">
+                <p class="mb-2"><strong>Name:</strong> {{ student.first_name }} {{ student.last_name }}</p>
+                <p class="mb-2"><strong>Email:</strong> {{ student.email }}</p>
+                <div class="p-3 bg-light border rounded">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Total Courses</span>
+                        <strong>{{ enrollments|length }}</strong>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span>Total Fee</span>
+                        <strong>Rs.{{ "%.2f"|format(total_fee) }}</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 2: Courses table -->
+    <div class="col-lg-8">
+        <div class="card h-100">
+            <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                <span><i class="bi bi-journal-check me-1"></i> Enrolled Courses</span>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead>
+                            <tr>
+                                <th>Course Name</th>
+                                <th>Description</th>
+                                <th class="text-end">Fee</th>
+                                <th class="text-end">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for e in enrollments %}
+                            <tr>
+                                <td data-label="Course Name">{{ e.course_name }}</td>
+                                <td data-label="Description">{{ (e.description or "—")[:60] }}{% if e.description and e.description|length > 60 %}…{% endif %}</td>
+                                <td data-label="Fee" class="text-end">Rs.{{ "%.2f"|format(e.fee) }}</td>
+                                <td data-label="Action" class="text-end">
+                                    <form method="POST" action="{{ url_for('unenroll', enrollment_id=e.enrollment_id) }}" onsubmit="return confirm('Remove this enrollment?');">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger"><i class="bi bi-x-lg"></i></button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% else %}
+                            <tr><td colspan="4" class="text-center text-muted py-4">Not enrolled in any courses yet.</td></tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

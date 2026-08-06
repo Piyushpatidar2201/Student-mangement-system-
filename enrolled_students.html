@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Students Enrolled in Courses - Student Management System{% endblock %}
+
+{% block content %}
+<div class="bg-primary text-white rounded-3 p-4 mb-4">
+    <div class="d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between gap-3">
+        <div>
+            <h2 class="mb-1">Students Enrolled in Courses</h2>
+            <p class="mb-0 opacity-75">Track enrollment coverage, fees, and quick access to details.</p>
+        </div>
+        <a href="{{ url_for('enroll_course') }}" class="btn btn-light text-primary fw-semibold"><i class="bi bi-plus-lg me-1"></i> Enroll Student</a>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header bg-white">
+        <i class="bi bi-table me-1"></i> Enrolled Students
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover table-striped align-middle">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Student Name</th>
+                        <th>Email</th>
+                        <th>Courses Count</th>
+                        <th>Total Fee</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in enrolled %}
+                    <tr>
+                        <td data-label="#">{{ loop.index }}</td>
+                        <td data-label="Student Name">{{ row.first_name }} {{ row.last_name }}</td>
+                        <td data-label="Email">{{ row.email }}</td>
+                        <td data-label="Courses Count">{{ row.course_count }}</td>
+                        <td data-label="Total Fee">Rs.{{ "%.2f"|format(row.total_fee) }}</td>
+                        <td data-label="Actions">
+                            <a href="{{ url_for('enrollment_details', student_id=row.id) }}" class="btn btn-sm btn-info text-white" title="View"><i class="bi bi-eye"></i></a>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="6" class="text-center text-muted py-4">
+                            No students enrolled yet. <a href="{{ url_for('enroll_course') }}">Enroll one now</a>.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

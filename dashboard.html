@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block title %}Dashboard - Student Management System{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Dashboard</h2>
+
+<!-- Stats Cards -->
+<div class="row g-4 mb-4">
+    <div class="col-md-3">
+        <div class="card bg-primary text-white h-100">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="card-title mb-0">Total Students</h6>
+                        <h2 class="my-2">{{ total_students }}</h2>
+                    </div>
+                    <i class="bi bi-people fs-1 opacity-50"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-success text-white h-100">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="card-title mb-0">Total Courses</h6>
+                        <h2 class="my-2">{{ total_courses }}</h2>
+                    </div>
+                    <i class="bi bi-book fs-1 opacity-50"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-info text-dark h-100">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="card-title mb-0">Top Performing Course</h6>
+                        <h2 class="my-2">{{ top_course or "—" }}</h2>
+                    </div>
+                    <i class="bi bi-trophy fs-1 opacity-50"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-secondary text-white h-100">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="card-title mb-0">Students Enrolled This Month</h6>
+                        <h2 class="my-2">{{ enrolled_this_month }}</h2>
+                    </div>
+                    <i class="bi bi-person-check fs-1 opacity-50"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Activity Table -->
+<div class="card mb-4">
+    <div class="card-header bg-white">
+        <i class="bi bi-table me-1"></i>
+        Recent Student Registrations
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Registered On</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for s in recent_students %}
+                    <tr>
+                        <td data-label="ID">#STU{{ "%03d"|format(s.id) }}</td>
+                        <td data-label="Name">{{ s.first_name }} {{ s.last_name }}</td>
+                        <td data-label="Email">{{ s.email }}</td>
+                        <td data-label="Registered On">{{ s.created_at }}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="4" class="text-center text-muted py-4">
+                            No students yet. <a href="{{ url_for('add_student') }}">Add your first student</a>.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
