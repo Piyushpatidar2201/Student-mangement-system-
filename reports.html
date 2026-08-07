@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Reports - Student Management System{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Reports</h2>
+
+<div class="row g-4">
+    <div class="col-md-6">
+        <div class="card h-100">
+            <div class="card-header bg-white">
+                <i class="bi bi-people me-1"></i> Students Report
+            </div>
+            <div class="card-body">
+                <p class="text-muted">Export the complete student list ({{ student_count }} record{{ 's' if student_count != 1 else '' }}) as a formatted PDF or a raw CSV file.</p>
+                <div class="d-flex gap-2">
+                    <a href="{{ url_for('report_pdf', kind='students') }}" class="btn btn-primary"><i class="bi bi-file-earmark-pdf me-1"></i> Download PDF</a>
+                    <a href="{{ url_for('report_csv', kind='students') }}" class="btn btn-outline-secondary"><i class="bi bi-file-earmark-spreadsheet me-1"></i> Download CSV</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card h-100">
+            <div class="card-header bg-white">
+                <i class="bi bi-book me-1"></i> Courses Report
+            </div>
+            <div class="card-body">
+                <p class="text-muted">Export the complete course list ({{ course_count }} record{{ 's' if course_count != 1 else '' }}) as a formatted PDF or a raw CSV file.</p>
+                <div class="d-flex gap-2">
+                    <a href="{{ url_for('report_pdf', kind='courses') }}" class="btn btn-primary"><i class="bi bi-file-earmark-pdf me-1"></i> Download PDF</a>
+                    <a href="{{ url_for('report_csv', kind='courses') }}" class="btn btn-outline-secondary"><i class="bi bi-file-earmark-spreadsheet me-1"></i> Download CSV</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
